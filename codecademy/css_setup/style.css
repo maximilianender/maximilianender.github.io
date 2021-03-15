@@ -2,8 +2,8 @@ p {
     font-family: Arial;
   }
   h1{color:maroon;}
-  .title{color:teal;}
+  .title{color:teal;text-transform:uppercase}
   .uppercase{text-transform:uppercase;}
-  #article-title{font-family:cursive;
-    text-transform:capitalize;}
-.publish-time{color: gray;}
+  .publish-time{color: gray;}
+  .cursive{font-family: cursive;}
+  .capitalize{text-transform: capitalize;}
