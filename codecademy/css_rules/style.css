@@ -60,6 +60,7 @@ body {
     margin-left: 20px;
     padding: 10px;
     position: relative;
+    opacity: 0.75;
     top: 80%;
     width: 60%;
   }
