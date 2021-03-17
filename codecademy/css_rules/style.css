@@ -10,6 +10,7 @@ body {
   }
   
   h1 {
+    font-family: Georgia;
     color: #FFF;
     font-size: 2em;
     padding-top: 100px;
@@ -19,6 +20,7 @@ body {
   h2 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     color: rgba(255, 255, 255, 0.5);
+    font-family: Georgia;
     font-weight: 100;
     font-size: 22px;
     line-height: 24px;
@@ -28,6 +30,7 @@ body {
   }
   
   p {
+    font-family: Helvetica;
     color: AliceBlue;
     line-height: 1.3em;
     text-align: left;
