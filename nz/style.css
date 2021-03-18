@@ -55,8 +55,16 @@ main figure img{
     border: 1px solid black;
 }
 
-#map {
+#Map {
     height: 360px;
     width: 100%;
+    border: 1px solid gray;
 }
 
+main ul {
+    list-style-type: circle;
+}
+
+footer .next{
+    float: right
+}
