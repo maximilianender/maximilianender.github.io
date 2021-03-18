@@ -85,3 +85,15 @@ footer{
     margin-left: 0.3em;
 }
 
+@media screen and (max-width: 900px) {
+    main{
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    header img.banner {
+        width: 100vw;
+    }
+}
+
