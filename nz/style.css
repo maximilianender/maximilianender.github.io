@@ -55,7 +55,7 @@ main figure img{
     border: 1px solid black;
 }
 
-#Map {
+#map {
     height: 360px;
     width: 100%;
     border: 1px solid gray;
@@ -66,5 +66,14 @@ main ul {
 }
 
 footer .next{
-    float: right
+    float: right;
 }
+
+footer .back{
+    float:left;
+}
+
+footer{
+    padding: 1em 0 3em 0;
+}
+
