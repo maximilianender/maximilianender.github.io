@@ -37,4 +37,6 @@ console.log(gainedDollar);
 
 lostDollar--;
 console.log(lostDollar);
+let favoriteAnimal = "Tasmanian Devil"; 
+console.log("My favorite animal: " + favoriteAnimal);
 
