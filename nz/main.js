@@ -27,9 +27,10 @@ for (let entry of ROUTE) {
     let mrk = L.marker([entry.lat, entry.lng]).addTo(map);
     mrk.bindPopup(`<h4> ${entry.nr}: ${entry.name}</h4><p><i class="fas fa-external-link-alt mr-3"></i><a href="${entry.wikipedia}">Read about stop in Wikipedia</a></p>`);
 
-    if (entry.nr = 19) {
+    if (entry.nr == 19) {
+        map.setView([entry.lat, entry.lng],19);
         mrk.openPopup();
-    })
+    }
 
 }
 
