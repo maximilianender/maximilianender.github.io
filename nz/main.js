@@ -10,4 +10,5 @@ const map = L.map("map", {
 });
 
 let mrk = L.marker([-41.293056, 174.001944]).addTo(map);
+mrk.bindPopup("Picton").openPopup();
 console.log(document.querySelector("#map"))
