@@ -2,7 +2,7 @@ console.log("Hello World!");
 console.log(L);
 
 let stop = {
-    nr: 17,
+    nr: 19,
     name: "Picton",
     lat: -41.293056,
     lng:  174.001944,
