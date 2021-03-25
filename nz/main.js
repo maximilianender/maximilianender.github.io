@@ -14,7 +14,7 @@ let stop = {
 
 const map = L.map("map", {
     center: [stop.lat, stop.lng],
-    zoom: 14,
+    zoom: 12,
     layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
     ]
