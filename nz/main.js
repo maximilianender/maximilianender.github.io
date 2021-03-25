@@ -14,7 +14,7 @@ let stop = {
 
 const map = L.map("map", {
     center: [stop.lat, stop.lng],
-    zoom: 12,
+    zoom: 10,
     layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
     ]
@@ -28,7 +28,7 @@ for (let entry of ROUTE) {
     mrk.bindPopup(`<h4> ${entry.nr}: ${entry.name}</h4><p><i class="fas fa-external-link-alt mr-3"></i><a href="${entry.wikipedia}">Read about stop in Wikipedia</a></p>`);
 
     if (entry.nr == 19) {
-        map.setView([entry.lat, entry.lng],19);
+        map.setView([entry.lat, entry.lng],13);
         mrk.openPopup();
     }
 
