@@ -55,14 +55,7 @@ const ROUTE = [
         lng: 166.983333,
         user: "annakarolinv",
         wikipedia: "https://en.wikipedia.org/wiki/Doubtful_Sound_/_Patea"
-    }, {
-        nr: 17,
-        name: "Picton",
-        lat: -41.293056,
-        lng: 174.001944,
-        user: "maximilianender",
-        Wikipedia: "https://en.wikipedia.org/wiki/Picton,_New_Zealand",
-    }, {
+    },  {
         nr: 20,
         name: "Wellington",
         lat: -41.2875,
