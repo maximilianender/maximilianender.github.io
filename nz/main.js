@@ -1,14 +1,27 @@
 console.log("Hello World!");
 console.log(L);
 
+let stop = {
+    nr: 17,
+    name: "Picton",
+    lat: -41.293056,
+    lng:  174.001944,
+    user: "maximilianender",
+    Wikipedia: "https://en.wikipedia.org/wiki/Picton,_New_Zealand",
+};
+
+
+
 const map = L.map("map", {
-    center: [-41.293056, 174.001944],
+    center: [stop.lat, stop.lng],
     zoom: 14,
     layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
     ]
 });
 
-let mrk = L.marker([-41.293056, 174.001944]).addTo(map);
+let mrk = L.marker([stop.lat, stop.lng]).addTo(map);
 mrk.bindPopup("Picton").openPopup();
-console.log(document.querySelector("#map"))
+
+
+//console.log(document.querySelector("#map"))
