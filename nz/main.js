@@ -7,7 +7,7 @@ let stop = {
     lat: -41.293056,
     lng:  174.001944,
     user: "maximilianender",
-    Wikipedia: "https://en.wikipedia.org/wiki/Picton,_New_Zealand",
+    wikipedia: "https://en.wikipedia.org/wiki/Picton,_New_Zealand",
 };
 
 
