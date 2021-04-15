@@ -29,6 +29,8 @@ layerControl.addOverlay(awsLayer, "Wetterstationen Tirol");
 awsLayer.addTo(map);
 let snowLayer = L.featureGroup();
 layerControl.addOverlay(snowLayer, "Schneehöhen");
+let windLayer = L.featureGroup();
+layerControl.addOverlay(windLayer, "Windgeschwindigkeiten");
 
 fetch(awsUrl) .then(response => response.json())
 .then(json=>{console.log("Daten konvertier: ", json);
@@ -61,6 +63,11 @@ for(station of json.features) {
         if(station.properties.HS > 200){
             highlightClass  = 'snow-200';
         }
+    if(station.properties.WG){
+        let highlightClass = '';
+        if(station.properties.WG > 5) {highlightClass="wind-5";}
+        if(station.properties.WG > 10) {highlightClass="wind-10";}
+    }
         let snowIcon = L.divIcon({
             html: `<div class="snow-label">${station.properties.HS}</div>`
         })
@@ -71,6 +78,16 @@ for(station of json.features) {
             icon: snowIcon
         });
         snowMarker.addTo(snowLayer);
+
+        let windIcon = L.divIcon({html: `<div class="wind-label>${station.properties.WG}</div>`
+    })
+        let windMarker = L.marker([
+            station.geometry.coordinates[1],
+            station.geometry.coordinates[0]
+        ], {
+            icon: windIcon
+        });
+        windMarker.addTo(windLayer);
     }
 }
 // set map view to all stations
