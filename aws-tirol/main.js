@@ -33,7 +33,7 @@ let windLayer = L.featureGroup();
 layerControl.addOverlay(windLayer, "Windgeschwindigkeiten");
 
 fetch(awsUrl) .then(response => response.json())
-.then(json=>{console.log("Daten konvertier: ", json);
+.then(json=>{console.log("Daten konvertiert: ", json);
 for(station of json.features) {
     console.log("Station: ", station);
     let marker = L.marker([
@@ -63,13 +63,8 @@ for(station of json.features) {
         if(station.properties.HS > 200){
             highlightClass  = 'snow-200';
         }
-    if(station.properties.WG){
-        let highlightClass = '';
-        if(station.properties.WG > 5) {highlightClass="wind-5";}
-        if(station.properties.WG > 10) {highlightClass="wind-10";}
-    }
         let snowIcon = L.divIcon({
-            html: `<div class="snow-label">${station.properties.HS}</div>`
+            html: `<div class="snow-label ${highlightClass}">${station.properties.HS}</div>`
         })
         let snowMarker = L.marker([
             station.geometry.coordinates[1],
@@ -79,7 +74,13 @@ for(station of json.features) {
         });
         snowMarker.addTo(snowLayer);
 
-        let windIcon = L.divIcon({html: `<div class="wind-label>${station.properties.WG}</div>`
+    if(station.properties.WG){
+        let windhighlightClass = '';
+        if(station.properties.WG > 10) {windhighlightClass='wind-10';}
+        if(station.properties.WG > 20) {windhighlightClass='wind-20';}
+    }
+
+        let windIcon = L.divIcon({html: `<div class="wind-label ${windhighlightClass}">${station.properties.WG}</div>`
     })
         let windMarker = L.marker([
             station.geometry.coordinates[1],
