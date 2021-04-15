@@ -54,6 +54,13 @@ for(station of json.features) {
     //marker.addTo(awsLayer);
     marker.addTo(awsLayer);
     if (station.properties.HS) {
+        let highlightClass = "";
+        if(station.properties.HS > 100){
+            highlightClass = "snow-100";
+        }
+        if(station.properties.HS > 200){
+            highlightClass  = "snow-200";
+        }
         let snowIcon = L.divIcon({
             html: `<div class="snow-label">${station.properties.HS}</div>`
         })
