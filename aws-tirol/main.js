@@ -88,7 +88,7 @@ fetch(awsUrl).then(response => response.json())
                     html: `<div class="wind-label ${windHighlightClass}">${station.properties.WG}</div>`
                 });
                 let windMarker = L.marker([
-                    statio.geometry.coordinates[1],
+                    station.geometry.coordinates[1],
                     station.geometry.coordinates[0]
                 ], {
                     icon: windIcon
