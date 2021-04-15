@@ -35,10 +35,11 @@ for(station of json.features) {
     let marker = L.marker([
     station.geometry.coordinates[1],
     station.geometry.coordinates[0]]);
+    let formattedDate = new Date(station.properties.date);
     marker.bindPopup(`
     <h3>${station.properties.name}</h3>
     <ul>
-        <li>Datum: ${station.properties.date}</li>
+        <li>Datum: ${formattedDate.toLocaleString("de")}</li>
         <li>Temperatur: ${station.properties.LT}</li>
     </ul>
     `);
