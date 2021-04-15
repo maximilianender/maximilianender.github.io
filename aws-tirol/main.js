@@ -30,6 +30,8 @@ for(station of json.features) {
     console.log("Station: ", station);
     let marker = L.marker([station.geometry.coordinates[1],
     station.geometry.coordinates[0]]);
+    marker.bindPopup(`<h3>${station.properties.name}</h3>`);
     marker.addTo(map);
 }
 }); 
+
