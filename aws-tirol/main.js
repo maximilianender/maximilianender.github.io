@@ -28,7 +28,8 @@ let snowLayer = L.featureGroup();
 layerControl.addOverlay(snowLayer, "Schneehöhen");
 let windLayer = L.featureGroup();
 layerControl.addOverlay(windLayer, "Windgeschwindigkeit (km/h)");
-windLayer.addTo(map);
+let TempLayer = L.featureGroup();
+layerControl.addOverlay(TempLayer, "Lufttemperatur (°C)");
 
 fetch(awsUrl).then(response => response.json())
     .then(json => {
@@ -76,6 +77,7 @@ fetch(awsUrl).then(response => response.json())
                 snowMarker.addTo(snowLayer);
 
             }
+            //Windgeschwindigkeit
             if(station.properties.WG){
                 let windHighlightClass = '';
                 if(station.properties.WG > 10) {
@@ -94,6 +96,26 @@ fetch(awsUrl).then(response => response.json())
                     icon: windIcon
                 });
                 windMarker.addTo(windLayer);
+            }
+            //Lufttemperatur 
+            if(station.properties.LT){
+                let tempHighlightClass = '';
+                if(station.properties.LT > 0){
+                    tempHighlightClass = 'tempgr0';
+                }
+                if(station.properties.LT < 0){
+                    tempHighlightClass = 'tempkl0';
+                }
+                let tempIcon = L.divIcon({
+                    html: `<div class="temp-label ${tempHighlightClass}">${station.properties.LT}</div>`
+                });
+                let tempMarker = L.marker([
+                    station.geometry.coordinates[1],
+                    station.geometry.coordinates[0],
+                ], {
+                    icon: tempIcon
+                });
+                tempMarker.addTo(TempLayer);
             }
         }
         // set map view to all stations

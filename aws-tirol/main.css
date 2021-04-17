@@ -30,3 +30,11 @@ h2{
 .snow-200, .wind-20 {
     background-color: red;
 }
+
+.tempgr0 {
+    background-color: green;
+}
+
+.tempkl0{
+    background-color: blue;
+}
