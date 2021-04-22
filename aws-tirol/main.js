@@ -13,11 +13,11 @@ let map = L.map("map", {
 //https://leafletjs.com/reference-1.7.1.html#layer
 
 let overlays = {
-stations: L.featureGroup(),
-temperature: L.featureGroup(),
-snowheight: L.featureGroup(),
-windspeed: L.featureGroup(),
-winddirection: L.featureGroup(),
+    stations: L.featureGroup(),
+    temperature: L.featureGroup(),
+    snowheight: L.featureGroup(),
+    windspeed: L.featureGroup(),
+    winddirection: L.featureGroup(),
 };
 
 let layerControl = L.control.layers({
@@ -40,13 +40,11 @@ let layerControl = L.control.layers({
 }).addTo(map);
 overlays.temperature.addTo(map);
 
-L.control.scale(
-    {
-        maxWidth: 200,
-        metric: true,
-        imperial: false
-    }
-).addTo(map);
+L.control.scale({
+    maxWidth: 200,
+    metric: true,
+    imperial: false
+}).addTo(map);
 
 let getColor = (value, colorRamp) => {
     for (let rule of colorRamp) {
@@ -54,7 +52,7 @@ let getColor = (value, colorRamp) => {
             return rule.col;
         }
     }
-    return "black"; 
+    return "black";
 };
 
 let newLabel = (coords, options) => {
@@ -63,8 +61,8 @@ let newLabel = (coords, options) => {
         html: `<div style="background-color: ${color}">${options.value}</div>`,
         className: "text-label"
     })
-    let marker = L.marker([coords[1],coords[0]], {
-        icon: label, 
+    let marker = L.marker([coords[1], coords[0]], {
+        icon: label,
         title: `${options.station} (${coords[2]} m.ü.A)`
     });
     return marker;
@@ -101,16 +99,16 @@ fetch(awsUrl).then(response => response.json())
             //marker.addTo(awsLayer);
             marker.addTo(overlays.stations);
             //Schneehöhe
-            if (typeof station.properties.HS == 'number'){
+            if (typeof station.properties.HS == 'number') {
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.HS.toFixed(0),
                     colors: COLORS.snowheight,
                     station: station.properties.name
                 });
                 marker.addTo(overlays.snowheight);
-            } 
+            }
             //Windgeschwindigkeit
-            if(typeof station.properties.WG == 'number'){
+            if (typeof station.properties.WG == 'number') {
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.WG.toFixed(0),
                     colors: COLORS.windspeed,
@@ -119,7 +117,7 @@ fetch(awsUrl).then(response => response.json())
                 marker.addTo(overlays.windspeed);
             }
             //Lufttemperatur 
-            if(typeof station.properties.LT == 'number'){
+            if (typeof station.properties.LT == 'number') {
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.LT.toFixed(1),
                     colors: COLORS.temperature,
@@ -131,5 +129,3 @@ fetch(awsUrl).then(response => response.json())
         // set map view to all stations
         map.fitBounds(overlays.stations.getBounds());
     });
-
-    
