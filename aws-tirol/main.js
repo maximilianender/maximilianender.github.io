@@ -96,26 +96,6 @@ fetch(awsUrl).then(response => response.json())
                 });
                 marker.addTo(overlays.snowheight);
             } 
-            /*{
-                let highlightClass = '';
-                if (station.properties.HS > 100) {
-                    highlightClass = 'snow-100';
-                }
-                if (station.properties.HS > 200) {
-                    highlightClass = 'snow-200';
-                }
-                let snowIcon = L.divIcon({
-                    html: `<div class="snow-label ${highlightClass}">${station.properties.HS}</div>`
-                })
-                let snowMarker = L.marker([
-                    station.geometry.coordinates[1],
-                    station.geometry.coordinates[0]
-                ], {
-                    icon: snowIcon
-                });
-                snowMarker.addTo(overlays.snowheight);
-
-            }*/
             //Windgeschwindigkeit
             if(typeof station.properties.WG == 'number'){
                 let marker = newLabel(station.geometry.coordinates, {
@@ -123,25 +103,6 @@ fetch(awsUrl).then(response => response.json())
                 });
                 marker.addTo(overlays.windspeed);
             }
-            /*{
-                let windHighlightClass = '';
-                if(station.properties.WG > 10) {
-                    windHighlightClass = 'wind-10';
-                }
-                if(station.properties.WG > 20) {
-                    windHighlightClass = 'wind-20';
-                }
-                let windIcon = L.divIcon({
-                    html: `<div class="wind-label ${windHighlightClass}">${station.properties.WG}</div>`
-                });
-                let windMarker = L.marker([
-                    station.geometry.coordinates[1],
-                    station.geometry.coordinates[0]
-                ], {
-                    icon: windIcon
-                });
-                windMarker.addTo(overlays.windspeed);
-            }*/
             //Lufttemperatur 
             if(typeof station.properties.LT == 'number'){
                 let marker = newLabel(station.geometry.coordinates, {
@@ -149,25 +110,6 @@ fetch(awsUrl).then(response => response.json())
                 });
                 marker.addTo(overlays.temperature);
             }
-            /*{
-                let tempHighlightClass = ''; 
-                if(station.properties.LT > 0){
-                    tempHighlightClass = 'tempgr0';
-                }
-                if(station.properties.LT < 0){
-                    tempHighlightClass = 'tempkl0';
-                }
-                let tempIcon = L.divIcon({
-                    html: `<div class="temp-label ${tempHighlightClass}">${station.properties.LT}</div>`
-                });
-                let tempMarker = L.marker([
-                    station.geometry.coordinates[1],
-                    station.geometry.coordinates[0],
-                ], {
-                    icon: tempIcon
-                });
-                tempMarker.addTo(overlays.temperature);
-            }*/
         }
         // set map view to all stations
         map.fitBounds(overlays.stations.getBounds());
