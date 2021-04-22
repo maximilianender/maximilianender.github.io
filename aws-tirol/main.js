@@ -11,29 +11,36 @@ let map = L.map("map", {
 });
 
 //https://leafletjs.com/reference-1.7.1.html#layer
+
+let overlays = {
+stations: L.featureGroup(),
+temperature: L.featureGroup(),
+snowheight: L.featureGroup(),
+windspeed: L.featureGroup(),
+winddirection: L.featureGroup(),
+};
+
 let layerControl = L.control.layers({
     "BasemapAT.grau": basemapGray,
     "BasemapAT.orthofoto": L.tileLayer.provider('BasemapAT.orthofoto'),
     "BasemapAT.surface": L.tileLayer.provider('BasemapAT.surface'),
-    "BAsemapAT.overlay": L.tileLayer.provider('BasemapAT.overlay'),
+    "BasemapAT.overlay": L.tileLayer.provider('BasemapAT.overlay'),
     "BasemapAT.overlay+ortho": L.layerGroup([
         L.tileLayer.provider('BasemapAT.orthofoto'),
         L.tileLayer.provider('BasemapAT.overlay')
     ])
+}, {
+    'Wetterstationen Tirol': overlays.stations,
+    'Lufttemperatur (°C)': overlays.temperature,
+    'Schneehöhe (cm)': overlays.snowheight,
+    'Windgeschwindigkeit (km/h)': overlays.windspeed,
+    'Windrichtung': overlays.winddirection
 }).addTo(map);
+overlays.temperature.addTo(map);
 
 let awsUrl = "https://wiski.tirol.gv.at/lawine/produkte/ogd.geojson";
 
 //https://leafletjs.com/reference-1.7.1.html#featuregroup
-let awsLayer = L.featureGroup();
-layerControl.addOverlay(awsLayer, "Wetterstationen Tirol");
-awsLayer.addTo(map);
-let snowLayer = L.featureGroup();
-layerControl.addOverlay(snowLayer, "Schneehöhen");
-let windLayer = L.featureGroup();
-layerControl.addOverlay(windLayer, "Windgeschwindigkeit (km/h)");
-let TempLayer = L.featureGroup();
-layerControl.addOverlay(TempLayer, "Lufttemperatur (°C)");
 
 fetch(awsUrl).then(response => response.json())
     .then(json => {
@@ -59,7 +66,7 @@ fetch(awsUrl).then(response => response.json())
     <a target="_blank" href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/tag/${station.properties.plot}.png">Grafik</a>
     `);
             //marker.addTo(awsLayer);
-            marker.addTo(awsLayer);
+            marker.addTo(overlays.stations);
             //Schneehöhe
             if (station.properties.HS) {
                 let highlightClass = '';
@@ -78,7 +85,7 @@ fetch(awsUrl).then(response => response.json())
                 ], {
                     icon: snowIcon
                 });
-                snowMarker.addTo(snowLayer);
+                snowMarker.addTo(overlays.snowheight);
 
             }
             //Windgeschwindigkeit
@@ -99,7 +106,7 @@ fetch(awsUrl).then(response => response.json())
                 ], {
                     icon: windIcon
                 });
-                windMarker.addTo(windLayer);
+                windMarker.addTo(overlays.windspeed);
             }
             //Lufttemperatur 
             if(station.properties.LT){
@@ -119,9 +126,9 @@ fetch(awsUrl).then(response => response.json())
                 ], {
                     icon: tempIcon
                 });
-                tempMarker.addTo(TempLayer);
+                tempMarker.addTo(overlays.temperature);
             }
         }
         // set map view to all stations
-        map.fitBounds(awsLayer.getBounds());
+        map.fitBounds(overlays.stations.getBounds());
     });
