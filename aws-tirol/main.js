@@ -64,7 +64,8 @@ let newLabel = (coords, options) => {
         className: "text-label"
     })
     let marker = L.marker([coords[1],coords[0]], {
-        icon: label
+        icon: label, 
+        title: `${options.station} (${coords[2]} m.ü.A)`
     });
     return marker;
     //Label zurückgeben
@@ -103,7 +104,8 @@ fetch(awsUrl).then(response => response.json())
             if (typeof station.properties.HS == 'number'){
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.HS.toFixed(0),
-                    colors: COLORS.snowheight
+                    colors: COLORS.snowheight,
+                    station: station.properties.name
                 });
                 marker.addTo(overlays.snowheight);
             } 
@@ -111,7 +113,8 @@ fetch(awsUrl).then(response => response.json())
             if(typeof station.properties.WG == 'number'){
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.WG.toFixed(0),
-                    colors: COLORS.windspeed
+                    colors: COLORS.windspeed,
+                    station: station.properties.name
                 });
                 marker.addTo(overlays.windspeed);
             }
@@ -119,7 +122,8 @@ fetch(awsUrl).then(response => response.json())
             if(typeof station.properties.LT == 'number'){
                 let marker = newLabel(station.geometry.coordinates, {
                     value: station.properties.LT.toFixed(1),
-                    colors: COLORS.temperature
+                    colors: COLORS.temperature,
+                    station: station.properties.name
                 });
                 marker.addTo(overlays.temperature);
             }
