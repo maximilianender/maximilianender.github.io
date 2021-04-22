@@ -40,8 +40,26 @@ let layerControl = L.control.layers({
 }).addTo(map);
 overlays.temperature.addTo(map);
 
+L.control.scale(
+    {
+        maxWidth: 200,
+        metric: true,
+        imperial: false
+    }
+).addTo(map);
 
-
+let newLabel = (coords, options) => {
+    let label = L.divIcon({
+        html: `<div>${options.value}</div>`,
+        className: "text-label"
+    })
+    let marker = L.marker([coords[1],coords[0]], {
+        icon: label
+    });
+    return marker;
+    //Label zurückgeben
+};
+// .text-label div
 let awsUrl = "https://wiski.tirol.gv.at/lawine/produkte/ogd.geojson";
 
 //https://leafletjs.com/reference-1.7.1.html#featuregroup
@@ -72,7 +90,13 @@ fetch(awsUrl).then(response => response.json())
             //marker.addTo(awsLayer);
             marker.addTo(overlays.stations);
             //Schneehöhe
-            if (station.properties.HS) {
+            if (typeof station.properties.HS == 'number'){
+                let marker = newLabel(station.geometry.coordinates, {
+                    value: station.properties.HS
+                });
+                marker.addTo(overlays.snowheight);
+            } 
+            /*{
                 let highlightClass = '';
                 if (station.properties.HS > 100) {
                     highlightClass = 'snow-100';
@@ -91,9 +115,15 @@ fetch(awsUrl).then(response => response.json())
                 });
                 snowMarker.addTo(overlays.snowheight);
 
-            }
+            }*/
             //Windgeschwindigkeit
-            if(station.properties.WG){
+            if(typeof station.properties.WG == 'number'){
+                let marker = newLabel(station.geometry.coordinates, {
+                    value: station.properties.WG
+                });
+                marker.addTo(overlays.windspeed);
+            }
+            /*{
                 let windHighlightClass = '';
                 if(station.properties.WG > 10) {
                     windHighlightClass = 'wind-10';
@@ -111,10 +141,16 @@ fetch(awsUrl).then(response => response.json())
                     icon: windIcon
                 });
                 windMarker.addTo(overlays.windspeed);
-            }
+            }*/
             //Lufttemperatur 
-            if(station.properties.LT){
-                let tempHighlightClass = '';
+            if(typeof station.properties.LT == 'number'){
+                let marker = newLabel(station.geometry.coordinates, {
+                    value: station.properties.LT
+                });
+                marker.addTo(overlays.temperature);
+            }
+            /*{
+                let tempHighlightClass = ''; 
                 if(station.properties.LT > 0){
                     tempHighlightClass = 'tempgr0';
                 }
@@ -131,8 +167,10 @@ fetch(awsUrl).then(response => response.json())
                     icon: tempIcon
                 });
                 tempMarker.addTo(overlays.temperature);
-            }
+            }*/
         }
         // set map view to all stations
         map.fitBounds(overlays.stations.getBounds());
     });
+
+    
