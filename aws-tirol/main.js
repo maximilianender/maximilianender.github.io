@@ -48,6 +48,17 @@ L.control.scale({
     imperial: false
 }).addTo(map);
 
+L.control.rainviewer({ 
+    position: 'bottomright',
+    nextButtonText: '>',
+    playStopButtonText: 'Play/Stop',
+    prevButtonText: '<',
+    positionSliderLabelText: "Hour:",
+    opacitySliderLabelText: "Opacity:",
+    animationInterval: 500,
+    opacity: 0.5
+}).addTo(map);
+
 let getColor = (value, colorRamp) => {
     for (let rule of colorRamp) {
         if (value >= rule.min && value < rule.max) {
@@ -57,9 +68,18 @@ let getColor = (value, colorRamp) => {
     return "black";
 };
 
+/*let getDirection = (val, WindRamp) => {
+    for(let rule of WindRamp) {
+        if(val >= rule.min && value < rule.max) {
+            return rule.dir; 
+        }
+    }
+    return "-";
+}*/
+
 let newLabel = (coords, options) => {
     let color = getColor(options.value, options.colors);
-    let label = L.divIcon({
+        let label = L.divIcon({
         html: `<div style="background-color: ${color}">${options.value}</div>`,
         className: "text-label"
     })
@@ -70,6 +90,20 @@ let newLabel = (coords, options) => {
     return marker;
     //Label zurückgeben
 };
+
+/*let WindLabel = (coords, options) => {
+    let Direction = getDirection(options.val, options.directions);
+        let label = L.divIcon({
+        html: `<div style="direction: ${Direction}">${options.val}</div>`,
+        className: "text-label"
+    })
+    let marker = L.marker([coords[1], coords[0]], {
+        icon: label,
+        title: `${options.station} (${coords[2]} m.ü.A)`
+    });
+    return marker;
+}*/
+
 // .text-label div
 let awsUrl = "https://wiski.tirol.gv.at/lawine/produkte/ogd.geojson";
 
@@ -136,7 +170,16 @@ fetch(awsUrl).then(response => response.json())
                 });
                 marker.addTo(overlays.relHum);
             }
+            //Windrichtung
+            /*if(typeof station.properties.WR == 'number') {
+                let marker = WindLabel(station.properties.coordinates, {
+                    value: station.properties.WR, 
+                    station: station.properties.name
+                }); 
+                marker.addTo(overlays.name); 
+            }*/
         }
+    
         // set map view to all stations
         map.fitBounds(overlays.stations.getBounds());
     });
