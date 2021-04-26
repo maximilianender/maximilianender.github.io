@@ -17,6 +17,7 @@ let overlays = {
     temperature: L.featureGroup(),
     snowheight: L.featureGroup(),
     windspeed: L.featureGroup(),
+    relHum: L.featureGroup(),
     winddirection: L.featureGroup(),
 };
 
@@ -32,6 +33,7 @@ let layerControl = L.control.layers({
 }, {
     'Wetterstationen Tirol': overlays.stations,
     'Lufttemperatur (°C)': overlays.temperature,
+    'Relative Luftfeuchtigkeit (%)': overlays.relHum,
     'Schneehöhe (cm)': overlays.snowheight,
     'Windgeschwindigkeit (km/h)': overlays.windspeed,
     'Windrichtung': overlays.winddirection
@@ -124,6 +126,15 @@ fetch(awsUrl).then(response => response.json())
                     station: station.properties.name
                 });
                 marker.addTo(overlays.temperature);
+            }
+            //Relative Luftfeuchtigkeit
+            if(typeof station.properties.RH == 'number') {
+                let marker = newLabel(station.geometry.coordinates, {
+                    value: station.properties.RH.toFixed(1),
+                    colors: COLORS.relHum, 
+                    station: station.properties.name
+                });
+                marker.addTo(overlays.relHum);
             }
         }
         // set map view to all stations
