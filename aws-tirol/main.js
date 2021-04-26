@@ -68,14 +68,15 @@ let getColor = (value, colorRamp) => {
     return "black";
 };
 
-/*let getDirection = (val, WindRamp) => {
-    for(let rule of WindRamp) {
+let getDirection = (val, dirRamp) => {
+    for(let rule of dirRamp) {
+        console.log("Val: ", val);
         if(val >= rule.min && value < rule.max) {
             return rule.dir; 
         }
     }
     return "-";
-}*/
+};
 
 let newLabel = (coords, options) => {
     let color = getColor(options.value, options.colors);
@@ -91,7 +92,7 @@ let newLabel = (coords, options) => {
     //Label zurückgeben
 };
 
-/*let WindLabel = (coords, options) => {
+let WindLabel = (coords, options) => {
     let Direction = getDirection(options.val, options.directions);
         let label = L.divIcon({
         html: `<div style="direction: ${Direction}">${options.val}</div>`,
@@ -102,7 +103,7 @@ let newLabel = (coords, options) => {
         title: `${options.station} (${coords[2]} m.ü.A)`
     });
     return marker;
-}*/
+};
 
 // .text-label div
 let awsUrl = "https://wiski.tirol.gv.at/lawine/produkte/ogd.geojson";
@@ -171,13 +172,13 @@ fetch(awsUrl).then(response => response.json())
                 marker.addTo(overlays.relHum);
             }
             //Windrichtung
-            /*if(typeof station.properties.WR == 'number') {
+            if(typeof station.properties.WR == 'string') {
                 let marker = WindLabel(station.properties.coordinates, {
-                    value: station.properties.WR, 
+                    value: DIRECTIONS.dir,
                     station: station.properties.name
                 }); 
-                marker.addTo(overlays.name); 
-            }*/
+                marker.addTo(overlays.winddirection); 
+            }
         }
     
         // set map view to all stations
