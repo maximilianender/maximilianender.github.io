@@ -56,7 +56,7 @@ L.control.rainviewer({
     positionSliderLabelText: "Hour:",
     opacitySliderLabelText: "Opacity:",
     animationInterval: 500,
-    opacity: 0.5
+    opacity: 0.75
 }).addTo(map);
 
 let getColor = (value, colorRamp) => {
