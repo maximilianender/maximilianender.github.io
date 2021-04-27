@@ -18,7 +18,7 @@ let overlays = {
     snowheight: L.featureGroup(),
     windspeed: L.featureGroup(),
     relHum: L.featureGroup(),
-    winddirection: L.featureGroup(),
+    winddirection: L.featureGroup()
 };
 
 let layerControl = L.control.layers({
@@ -68,14 +68,12 @@ let getColor = (value, colorRamp) => {
     return "black";
 };
 
-let getDirection = (val, dirRamp) => {
-    for(let rule of dirRamp) {
-        console.log("Val: ", val);
-        if(val >= rule.min && value < rule.max) {
-            return rule.dir; 
+let getDirection = (val, windRamp) => {
+    for (let rule of windRamp) {
+        if((val >= rule.min) && (val < rule.max)) {
+            return rule.dir;
         }
     }
-    return "-";
 };
 
 let newLabel = (coords, options) => {
@@ -93,9 +91,9 @@ let newLabel = (coords, options) => {
 };
 
 let WindLabel = (coords, options) => {
-    let Direction = getDirection(options.val, options.directions);
+    let Direction = getDirection(options.value, options.directions);
         let label = L.divIcon({
-        html: `<div style="direction: ${Direction}">${options.val}</div>`,
+        html: `<div>${Direction}</div>`,
         className: "text-label"
     })
     let marker = L.marker([coords[1], coords[0]], {
@@ -129,7 +127,7 @@ fetch(awsUrl).then(response => response.json())
         <li>Relative Luftfeuchtigkeit: ${station.properties.RH||"?"} %</li>
         <li>Schneehöhe: ${station.properties.HS||"?"} cm</li>
         <li>Windgeschwindigkeit: ${station.properties.WG||"?"} km/h</li>
-        <li>Windrichtung: ${station.properties.WR||"?"} °</li>
+        <li>Windrichtung: ${station.properties.WR|| "?"} ° </li>
     </ul>
     <a target="_blank" href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/tag/${station.properties.plot}.png">Grafik</a>
     `);
@@ -171,13 +169,15 @@ fetch(awsUrl).then(response => response.json())
                 });
                 marker.addTo(overlays.relHum);
             }
-            //Windrichtung
-            if(typeof station.properties.WR == 'string') {
-                let marker = WindLabel(station.properties.coordinates, {
-                    value: DIRECTIONS.dir,
+            //Windrichtung 
+            if(typeof station.properties.WR == 'number') {
+                let marker = WindLabel(station.geometry.coordinates, {
+                    value: station.properties.WR,
+                    directions: DIRECTIONS,
+                    colors: DIRECTIONS.col,
                     station: station.properties.name
-                }); 
-                marker.addTo(overlays.winddirection); 
+                });
+                marker.addTo(overlays.winddirection);
             }
         }
     
