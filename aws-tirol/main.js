@@ -122,12 +122,12 @@ fetch(awsUrl).then(response => response.json())
     <h3>${station.properties.name}</h3>
     <ul>
         <li>Datum: ${formattedDate.toLocaleString("de")} Uhr</li>
-        <li>Seehöhe: ${station.geometry.coordinates[2] ||"?"} m.ü.A.</li>
-        <li>Temperatur: ${station.properties.LT||"?"} °C</li>
-        <li>Relative Luftfeuchtigkeit: ${station.properties.RH||"?"} %</li>
-        <li>Schneehöhe: ${station.properties.HS||"?"} cm</li>
-        <li>Windgeschwindigkeit: ${station.properties.WG||"?"} km/h</li>
-        <li>Windrichtung: ${getDirection(station.properties.WR, DIRECTIONS)|| "?"} </li>
+        <li>Seehöhe: ${station.geometry.coordinates[2] ||"-"} m.ü.A.</li>
+        <li>Temperatur: ${station.properties.LT||"-"} °C</li>
+        <li>Relative Luftfeuchtigkeit: ${station.properties.RH||"-"} %</li>
+        <li>Schneehöhe: ${station.properties.HS||"-"} cm</li>
+        <li>Windgeschwindigkeit: ${station.properties.WG||"-"} km/h</li>
+        <li>Windrichtung: ${getDirection(station.properties.WR, DIRECTIONS)|| "-"} </li>
     </ul>
     <a target="_blank" href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/tag/${station.properties.plot}.png">Grafik</a>
     `);
