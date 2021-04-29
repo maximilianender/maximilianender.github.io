@@ -17,7 +17,8 @@ let baselayers = {
 let overlays = {
     busLines: L.featureGroup(),
     busStops: L.featureGroup(),
-    pedAreas: L.featureGroup()
+    pedAreas: L.featureGroup(),
+    sights: L.featureGroup()
 };
 
 // Karte initialisieren und auf Wiens Wikipedia Koordinate blicken
@@ -40,13 +41,15 @@ let layerControl = L.control.layers({
 }, {
     "Liniennetz Vienna Sightseeing": overlays.busLines,
     "Haltestellen Vienna Sightseeing": overlays.busStops,
-    "Fußgängerzonen": overlays.pedAreas
+    "Fußgängerzonen": overlays.pedAreas,
+    "Sehenswürdigkeiten": overlays.sights
 }).addTo(map);
 
 // alle Overlays nach dem Laden anzeigen
 overlays.busLines.addTo(map);
 overlays.busStops.addTo(map);
 overlays.pedAreas.addTo(map);
+overlays.sights.addTo(map);
 
 let drawBusStop = (geojsonData) => {
     L.geoJson(geojsonData, {
@@ -86,7 +89,7 @@ let drawPedAreas = (geojsonData) => {
         style: (feature) => {
             return{
                 stroke: true,
-                color: "black",
+                color: "silver",
                 fillColor: "yellow",
                 fillOpacity: 0.5
             }
@@ -98,6 +101,24 @@ let drawPedAreas = (geojsonData) => {
         }
     }).addTo(overlays.pedAreas);
 }
+
+let drawSights = (geojsonData) => {
+    L.geoJson(geojsonData, {
+        onEachFeature: (feature, layer) => {
+            layer.bindPopup(`<strong>${feature.properties.NAME}</strong> <hr>${feature.properties.ADRESSE}`)
+        },
+        pointToLayer: (geoJsonPoint, latlng) => {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/sight.png",
+                    iconSize: [20, 20]
+                })
+            })
+        },
+        attribution: "<a href='https://data.wien.gv.at '>Stadt Wien </a>, <a href= 'https://mapicons.mapsmaker.com'>Maps Icons Collection</a>"
+    }).addTo(overlays.sights);
+}
+
 
 //Bushaltestellen-Layer
 /*fetch("data/TOURISTIKHTSVSLOGD.json") 
@@ -131,6 +152,8 @@ for (let config of OGDWIEN) {
                 drawBusLine(geojsonData);
             } else if (config.title == "Fußgängerzonen") {
                 drawPedAreas(geojsonData);
+            } else if (config.title == "Sehenswürdigkeiten") {
+                drawSights(geojsonData);
             }
         })
 }
