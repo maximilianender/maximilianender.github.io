@@ -24,7 +24,7 @@ let overlays = {
 // Karte initialisieren und auf Wiens Wikipedia Koordinate blicken
 let map = L.map("map", {
     center: [48.208333, 16.373056],
-    zoom: 13,
+    zoom: 11.5,
     layers: [
         baselayers.grau
     ]
