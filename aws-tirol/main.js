@@ -174,7 +174,7 @@ fetch(awsUrl).then(response => response.json())
                 let marker = WindLabel(station.geometry.coordinates, {
                     value: station.properties.WR,
                     directions: DIRECTIONS,
-                    colors: COLORS.winddirection,
+                    colors: COLORS.winddirection.col,
                     station: station.properties.name
                 });
                 marker.addTo(overlays.winddirection);
