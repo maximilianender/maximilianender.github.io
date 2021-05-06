@@ -158,3 +158,6 @@ for (let config of OGDWIEN) {
             }
         })
 }
+
+//leaflet hash 
+//L.Hash(map);
