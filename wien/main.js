@@ -170,10 +170,16 @@ var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
     minimized: false
 }).addTo(map);
 
+//Funktion für Reachability-Plugin
+let styleIntervals = (feature) => {
+    console.log(feature.properties);
+};
+
 // Reachability
 L.control.reachability({
     // add settings/options here
     apiKey: '5b3ce3597851110001cf62485ab6a9625beb4b1caccb35f7084fab73',
+    styleFn: styleIntervals,
     drawButtonContent: '',
     drawButtonStyleClass: 'fa fa-pencil-alt fa-2x',
     deleteButtonContent: '',
