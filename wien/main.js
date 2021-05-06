@@ -89,7 +89,7 @@ let drawBusLine = (geojsonData) => {
 let drawPedAreas = (geojsonData) => {
     L.geoJson(geojsonData, {
         style: (feature) => {
-            return{
+            return {
                 stroke: true,
                 color: "silver",
                 fillColor: "yellow",
@@ -165,8 +165,7 @@ for (let config of OGDWIEN) {
 L.hash(map);
 
 // leaflet minimap
-var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"),
-{
+var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
     toggleDisplay: true,
     minimized: false
 }).addTo(map);
@@ -174,5 +173,21 @@ var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"),
 // Reachability
 L.control.reachability({
     // add settings/options here
-    apiKey: '5b3ce3597851110001cf62485ab6a9625beb4b1caccb35f7084fab73'
+    apiKey: '5b3ce3597851110001cf62485ab6a9625beb4b1caccb35f7084fab73',
+    drawButtonContent: '',
+    drawButtonStyleClass: 'fa fa-pencil-alt',
+    deleteButtonContent: '',
+    deleteButtonStyleClass: 'fa fa-trash',
+    distanceButtonContent: '',
+    distanceButtonStyleClass: 'fa fa-road',
+    timeButtonContent: '',
+    timeButtonStyleClass: 'fa fa-clock',
+    travelModeButton1Content: '',
+    travelModeButton1StyleClass: 'fa fa-car',
+    travelModeButton2Content: '',
+    travelModeButton2StyleClass: 'fa fa-bicycle',
+    travelModeButton3Content: '',
+    travelModeButton3StyleClass: 'fa fa-male',
+    travelModeButton4Content: '',
+    travelModeButton4StyleClass: 'fa fa-wheelchair'
 }).addTo(map);
