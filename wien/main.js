@@ -10,7 +10,7 @@ let baselayers = {
     ortho_overlay: L.layerGroup([
         L.tileLayer.provider("BasemapAT.orthofoto"),
         L.tileLayer.provider("BasemapAT.overlay")
-    ]),
+    ])
 };
 
 // Overlays für die Themen zum Ein- und Ausschalten definieren
@@ -163,4 +163,6 @@ for (let config of OGDWIEN) {
 
 //leaflet hash 
 L.Hash(map);
+
+var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap")).addTo(map);
 
