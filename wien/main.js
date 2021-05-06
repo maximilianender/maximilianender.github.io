@@ -164,9 +164,15 @@ for (let config of OGDWIEN) {
 //leaflet hash 
 L.hash(map);
 
+// leaflet minimap
 var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"),
 {
     toggleDisplay: true,
     minimized: false
 }).addTo(map);
 
+// Reachability
+L.control.reachability({
+    // add settings/options here
+    apiKey: '5b3ce3597851110001cf62485ab6a9625beb4b1caccb35f7084fab73'
+}).addTo(map);
