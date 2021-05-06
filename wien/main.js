@@ -23,6 +23,7 @@ let overlays = {
 
 // Karte initialisieren und auf Wiens Wikipedia Koordinate blicken
 let map = L.map("map", {
+    fullscreenControl: true,
     center: [48.208333, 16.373056],
     zoom: 11.5,
     layers: [
@@ -160,4 +161,5 @@ for (let config of OGDWIEN) {
 }
 
 //leaflet hash 
-//L.Hash(map);
+L.Hash(map);
+
