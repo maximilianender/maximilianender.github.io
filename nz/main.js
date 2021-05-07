@@ -15,6 +15,7 @@ let stop = {
 const map = L.map("map", {
     //center: [stop.lat, stop.lng],
     //zoom: 10,
+    fullscreenControl: true,
     layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
     ]
@@ -56,4 +57,9 @@ nav.onchange = (evt) => {
 };
 
 //console.log(document.querySelector("#map"))
-//
+
+//leaflet minimap
+var miniMap = new L.Control.MiniMap(L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"), {
+    toggleDisplay: true,
+    minimized: false
+}).addTo(map);
