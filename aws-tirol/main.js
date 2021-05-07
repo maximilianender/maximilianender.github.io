@@ -3,6 +3,7 @@ let basemapGray = L.tileLayer.provider('BasemapAT.grau');
 
 //https://leafletjs.com/reference-1.7.1.html#map-example
 let map = L.map("map", {
+    fullscreenControl: true,
     center: [47, 11],
     zoom: 9,
     layers: [
@@ -184,3 +185,9 @@ fetch(awsUrl).then(response => response.json())
         // set map view to all stations
         map.fitBounds(overlays.stations.getBounds());
     });
+
+    // leaflet minimap
+var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
+    toggleDisplay: true,
+    minimized: true
+}).addTo(map);
