@@ -43,6 +43,13 @@ let layerControl = L.control.layers({
 // Overlay mit GPX-Track anzeigen
 overlays.tracks.addTo(map);
 
+//Leaflet Elevationprofile Plugin
+const elevationControl = L.control.elevation({
+    elevationDiv: "#profile", 
+    followMarker: false,
+    theme: "lime-theme"
+}).addTo(map);
+
 // Leaflet GPX Profil
 const drawTrack = (nr) => {
     //console.log("track:", nr);
@@ -68,10 +75,7 @@ const drawTrack = (nr) => {
         <li><strong>Maximal Height: </strong>${gpxTrack.get_elevation_max(nr)} m.ü.A</li>
     </ul>`);
     });
-    // TODO: popup with
-    //name, max height, min height, total dist
-    
-
+    elevationControl.load(`tracks/${nr}.gpx`);
 };
 
 const selectedTrack = 8;
