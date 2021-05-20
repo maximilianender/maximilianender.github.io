@@ -70,12 +70,16 @@ const drawTrack = (nr) => {
     gpxTrack.on("loaded", () => {
         //console.log("loaded.gpx");
         map.fitBounds(gpxTrack.getBounds());
-    gpxTrack.bindPopup(`<h3>${gpxTrack.get_name(nr)}</h3>
+    gpxTrack.bindPopup(`
+    <h3>${gpxTrack.get_name()}</h3>
     <ul>
-        <li><strong> Distance: </strong>${gpxTrack.get_distance(nr)/1000} km</li>
-        <li><strong>Manimal Height: </strong>${gpxTrack.get_elevation_min(nr)} m.ü.A.</li>
-        <li><strong>Maximal Height: </strong>${gpxTrack.get_elevation_max(nr)} m.ü.A</li>
-    </ul>`);
+        <li>Streckenlänge: ${gpxTrack.get_distance()} m</li>
+        <li>tiefster Punkt: ${gpxTrack.get_elevation_min()} m</li>
+        <li>höchster Punkt: ${gpxTrack.get_elevation_max()} m</li>
+        <li>Höhenmeter bergauf: ${gpxTrack.get_elevation_gain()} m</li>
+        <li>Höhenmeter bergab: ${gpxTrack.get_elevation_loss()} m</li>
+    </ul>
+    `);
     });
     elevationControl.load(`tracks/${nr}.gpx`);
 };
