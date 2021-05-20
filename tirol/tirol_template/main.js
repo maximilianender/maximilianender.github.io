@@ -43,6 +43,7 @@ let layerControl = L.control.layers({
 // Overlay mit GPX-Track anzeigen
 overlays.tracks.addTo(map);
 
+// Leaflet GPX Profil
 const drawTrack = (nr) => {
     //console.log("track:", nr);
     let gpxTrack = new L.GPX(`tracks/${nr}.gpx`, {
