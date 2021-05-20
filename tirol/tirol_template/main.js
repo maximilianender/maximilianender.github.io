@@ -53,6 +53,8 @@ const elevationControl = L.control.elevation({
 // Leaflet GPX Profil
 const drawTrack = (nr) => {
     //console.log("track:", nr);
+    elevationControl.clear();
+    overlays.tracks.clearLayers();
     let gpxTrack = new L.GPX(`tracks/${nr}.gpx`, {
         async: true,
         marker_options: {
@@ -82,7 +84,8 @@ const selectedTrack = 8;
 
 drawTrack(selectedTrack);
 
-console.log("biketirol json: ", BIKETIROL);
+//Pulldown Menü
+//console.log("biketirol json: ", BIKETIROL);
 let pulldown = document.querySelector("#pulldown"); 
 console.log("pulldown: ", pulldown);
 let selected = '';
