@@ -58,13 +58,20 @@ const drawWikipedia = (bounds) => {
             let mrk = L.marker([article.lat, article.lng]);
             mrk.addTo(overlays.wikipedia);
 
-            //Popup erzeugen
+            // optionales Bild definieren
             let img = "";
             if(article.thumbnailImg) {
                 img = `<img src="${article.thumbnailImg}" alt="Thumbnail">`;
             }
             
-            
+            // Popup definieren 
+            mrk.bindPopup(`
+                <small>${article.feature}</small>
+                <h3>${article.title} (${article.elevation}m)</h3>
+                ${img}
+                <p>${article.summary}</p>
+                <a href="https://${article.wikipediaUrl}">'Wikipedia</a>
+            `)
         }
     }); 
 };
