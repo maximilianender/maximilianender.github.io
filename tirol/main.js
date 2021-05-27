@@ -67,9 +67,9 @@ const drawWikipedia = (bounds) => {
         response => response.json()
     ).then(jsonData => {
         // Artikel Marker erzeugen
-        for(let article of jsonData.geonames) {
+        for (let article of jsonData.geonames) {
             //Hab ich den Artikel schon gezeichnet?
-            if(articleDrawn[article.wikipediaUrl]) {
+            if (articleDrawn[article.wikipediaUrl]) {
                 //Ja, nicht noch einmals zeichnen
                 continue;
             } else {
@@ -77,7 +77,7 @@ const drawWikipedia = (bounds) => {
                 articleDrawn[article.wikipediaUrl] = true;
             }
             // Welches Icon soll verwendet werden? 
-            if(icons[article.feature]) {
+            if (icons[article.feature]) {
                 // ein Bekanntes
             } else {
                 // Generisches Info-Icon
@@ -87,19 +87,19 @@ const drawWikipedia = (bounds) => {
             let mrk = L.marker([article.lat, article.lng], {
                 icon: L.icon({
                     iconUrl: `icons/${icons[article.feature]}`,
-                    iconSize: [32,37],
-                    iconAnchor: [16,37],
-                    popupAnchor: [0,-37],
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
                 })
             });
             mrk.addTo(overlays.wikipedia);
 
             // optionales Bild definieren
             let img = "";
-            if(article.thumbnailImg) {
+            if (article.thumbnailImg) {
                 img = `<img src="${article.thumbnailImg}" alt="Thumbnail">`;
             }
-            
+
             // Popup definieren 
             mrk.bindPopup(`
                 <small>${article.feature}</small>
@@ -109,7 +109,7 @@ const drawWikipedia = (bounds) => {
                 <a href="https://${article.wikipediaUrl}">'Wikipedia</a>
             `);
         }
-    }); 
+    });
 };
 
 // Overlay mit GPX-Track anzeigen
@@ -118,7 +118,7 @@ overlays.wikipedia.addTo(map);
 
 //Leaflet Elevationprofile Plugin
 const elevationControl = L.control.elevation({
-    elevationDiv: "#profile", 
+    elevationDiv: "#profile",
     followMarker: false,
     theme: "lime-theme"
 }).addTo(map);
@@ -134,16 +134,16 @@ const drawTrack = (nr) => {
             startIconUrl: `icons/number_${nr}.png`,
             endIconUrl: 'icons/finish.png',
             shadowUrl: null
-          },
-          polyline_options: {
-              color: 'black',
-              dashArray: [2, 5] 
-          }
+        },
+        polyline_options: {
+            color: 'black',
+            dashArray: [2, 5]
+        }
     }).addTo(overlays.tracks);
     gpxTrack.on("loaded", () => {
         //console.log("loaded.gpx");
         map.fitBounds(gpxTrack.getBounds());
-    gpxTrack.bindPopup(`
+        gpxTrack.bindPopup(`
     <h3>${gpxTrack.get_name()}</h3>
     <ul>
         <li>Streckenlänge: ${gpxTrack.get_distance()} m</li>
@@ -166,19 +166,27 @@ const updateTexts = (nr) => {
     for (let etappe of BIKETIROL) {
         //console.log(etappe);
         // Ist es die aktuelle Etappe? 
-        if(etappe.nr == nr) {
+        if (etappe.nr == nr) {
             console.log("unsere Etappe", etappe);
+            for (let key in etappe) {
+                console.log("key:", key, "value", etappe[key]);
+                // gibt es ein Element im HTML mit der ID von "key"
+                if (document.querySelector(`#${key}`)) {
+                    console.log("Juhu", key, etappe[key]);
+                    document.querySelector(`#${key}`).innerHTML = etappe[key];
+                }
+            }
         };
     }
 };
 
 //Pulldown Menü
 //console.log("biketirol json: ", BIKETIROL);
-let pulldown = document.querySelector("#pulldown"); 
+let pulldown = document.querySelector("#pulldown");
 console.log("pulldown: ", pulldown);
 let selected = '';
-for(let track of BIKETIROL) {
-    if(selectedTrack == track.nr) {
+for (let track of BIKETIROL) {
+    if (selectedTrack == track.nr) {
         selected = 'selected';
     } else {
         selected = '';
@@ -191,7 +199,7 @@ updateTexts(pulldown.value);
 pulldown.onchange = () => {
     //console.log("changed!!!", pulldown.value);
     drawTrack(pulldown.value);
-    
+
     //Metadaten der Etappe updaten 
     updateTexts(pulldown.value);
 };
@@ -200,4 +208,3 @@ map.on("zoomend moveend", () => {
     //Wikipedia Artikel zeichnen 
     drawWikipedia(map.getBounds());
 });
-
