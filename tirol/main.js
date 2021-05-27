@@ -163,6 +163,13 @@ drawTrack(selectedTrack);
 
 const updateTexts = (nr) => {
     console.log(nr);
+    for (let etappe of BIKETIROL) {
+        //console.log(etappe);
+        // Ist es die aktuelle Etappe? 
+        if(etappe.nr == nr) {
+            console.log("unsere Etappe", etappe);
+        };
+    }
 };
 
 //Pulldown Menü
