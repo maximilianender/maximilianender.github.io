@@ -161,6 +161,10 @@ const selectedTrack = 8;
 
 drawTrack(selectedTrack);
 
+const updateTexts = (nr) => {
+    console.log(nr);
+};
+
 //Pulldown Menü
 //console.log("biketirol json: ", BIKETIROL);
 let pulldown = document.querySelector("#pulldown"); 
@@ -174,10 +178,15 @@ for(let track of BIKETIROL) {
     }
     pulldown.innerHTML += `<option  ${selected} value="${track.nr}">${track.nr}: ${track.etappe}</option>`
 }
+// Metadaten der Etappe updaten
+updateTexts(pulldown.value);
 
 pulldown.onchange = () => {
     //console.log("changed!!!", pulldown.value);
     drawTrack(pulldown.value);
+    
+    //Metadaten der Etappe updaten 
+    updateTexts(pulldown.value);
 };
 
 map.on("zoomend moveend", () => {
